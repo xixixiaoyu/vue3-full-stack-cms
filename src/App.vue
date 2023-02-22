@@ -1,10 +1,6 @@
 <script>
 export default {
-  mounted() {
-    this.$request.get("/login").then(res => {
-      console.log(res);
-    });
-  },
+  mounted() {},
 };
 </script>
 
