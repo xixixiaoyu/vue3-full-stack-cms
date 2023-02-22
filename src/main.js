@@ -6,7 +6,7 @@ import "element-plus/dist/index.css";
 import request from "./utils/request";
 import storage from "./utils/storage";
 
-console.log(import.meta.env);
+// console.log(import.meta.env);
 const app = createApp(App);
 
 app.config.globalProperties.$request = request;
