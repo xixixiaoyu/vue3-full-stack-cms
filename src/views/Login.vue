@@ -66,7 +66,7 @@ const login = async formEl => {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .login-wrapper {
   display: flex;
   justify-content: center;
