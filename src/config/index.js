@@ -2,7 +2,7 @@ const env = import.meta.env.VITE_USER_NODE_ENV || "prod";
 
 const EnvConfig = {
   dev: {
-    baseApi: "/",
+    baseApi: "/api",
     mockApi: "https://www.fastmock.site/mock/13089f924ad68903046c5a61371475c4/api",
   },
   test: {

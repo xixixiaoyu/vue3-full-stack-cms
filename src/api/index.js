@@ -3,9 +3,10 @@ import request from "../utils/request";
 export default {
   login(data) {
     return request({
-      url: "/user/login",
+      url: "/users/login",
       method: "post",
       data,
+      mock: false,
     });
   },
 };
