@@ -24,7 +24,9 @@
           <div class="menu-fold" @click="toggle">
             <el-icon><Fold /></el-icon>
           </div>
-          <div class="bread">面包屑</div>
+          <div class="bread">
+            <BreadCrumb />
+          </div>
         </div>
         <div class="user-info">
           <el-badge :is-dot="!!noticeCount" class="notice">
@@ -59,9 +61,11 @@
 
 <script>
 import TreeMenu from "./TreeMenu.vue";
+import BreadCrumb from "./BreadCrumb.vue";
+
 export default {
   name: "Home",
-  components: { TreeMenu },
+  components: { TreeMenu, BreadCrumb },
   data() {
     return {
       userInfo: this.$store.state.userInfo || { userName: "", userEmail: "" },
@@ -153,6 +157,8 @@ export default {
         display: flex;
         align-items: center;
         .menu-fold {
+          position: relative;
+          top: 3px;
           margin-right: 15px;
           font-size: 18px;
         }
