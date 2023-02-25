@@ -9,4 +9,16 @@ export default {
       mock: false,
     });
   },
+  noticeCount() {
+    return request({
+      url: "/leave/count",
+      method: "get",
+    });
+  },
+  getMenuList() {
+    return request({
+      url: "/menu/list",
+      method: "get",
+    });
+  },
 };
