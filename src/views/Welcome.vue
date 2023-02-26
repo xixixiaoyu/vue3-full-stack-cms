@@ -2,21 +2,28 @@
   <div class="welcome">
     <div class="content">
       <div class="sub-title">欢迎体验</div>
-      <div class="title">通用后台管理系统</div>
-      <div class="desc">-Vue3.0 + ElementPlus + Node + mongo 打造通用后台管理系统</div>
+      <div class="title">慕课通用后台管理系统</div>
+      <div class="desc">
+        - Vue3.0+ElementPlus+Node+Mongo打造通用后台管理系统
+      </div>
     </div>
     <div class="img"></div>
   </div>
 </template>
 
-<script setup></script>
+<script>
+export default {
+  name: "welcome",
+};
+</script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .welcome {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100%;
+  background-color: #fff;
   .content {
     position: relative;
     bottom: 40px;
@@ -37,10 +44,10 @@
     }
   }
   .img {
+    margin-left: 105px;
+    background-image: url("./../assets/images/welcome.png");
     width: 371px;
     height: 438px;
-    margin-left: 105px;
-    background-image: url("../assets/images/welcome.png");
   }
 }
 </style>

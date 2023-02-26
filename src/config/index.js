@@ -1,23 +1,24 @@
-const env = import.meta.env.VITE_USER_NODE_ENV || "prod";
-
+/**
+ * 环境配置封装
+ */
+const env = import.meta.env.MODE || 'prod';
 const EnvConfig = {
-  dev: {
-    baseApi: "/api",
-    mockApi: "https://www.fastmock.site/mock/c1c302e8baed9894c48c17e4738c092e/api",
-  },
-  test: {
-    baseApi: "/",
-    mockApi: "https://www.fastmock.site/mock/13089f924ad68903046c5a61371475c4/api",
-  },
-  prod: {
-    baseApi: "/",
-    mockApi: "https://www.fastmock.site/mock/13089f924ad68903046c5a61371475c4/api",
-  },
-};
-
+    dev:{
+        baseApi:'/api',
+        mockApi:'https://www.fastmock.site/mock/c1c302e8baed9894c48c17e4738c092e/api'
+    },
+    test:{
+        baseApi:'//test.futurefe.com/api',
+        mockApi:'https://www.fastmock.site/mock/c1c302e8baed9894c48c17e4738c092e/api'
+    },
+    prod:{
+        baseApi:'//futurefe.com/api',
+        mockApi:'https://www.fastmock.site/mock/c1c302e8baed9894c48c17e4738c092e/api'
+    }
+}
 export default {
-  namespace: "manager",
-  env,
-  mock: true,
-  ...EnvConfig[env],
-};
+    env,
+    mock:false,
+    namespace:'manager',
+    ...EnvConfig[env]
+}

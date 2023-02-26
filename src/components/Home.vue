@@ -1,19 +1,19 @@
 <template>
   <div class="basic-layout">
     <div :class="['nav-side', isCollapse ? 'fold' : 'unfold']">
-      <!-- 系统logo -->
+      <!-- 系统LOGO -->
       <div class="logo">
-        <img src="../assets/logo.png" alt="" />
+        <img src="./../assets/logo.png" />
         <span>Manager</span>
       </div>
       <!-- 导航菜单 -->
       <el-menu
-        :collapse="isCollapse"
-        default-active="2"
-        class="nav-menu"
+        :default-active="activeMenu"
         background-color="#001529"
         text-color="#fff"
         router
+        :collapse="isCollapse"
+        class="nav-menu"
       >
         <tree-menu :userMenu="userMenu" />
       </el-menu>
@@ -22,22 +22,25 @@
       <div class="nav-top">
         <div class="nav-left">
           <div class="menu-fold" @click="toggle">
-            <el-icon><Fold /></el-icon>
+            <i class="el-icon-s-fold"></i>
           </div>
           <div class="bread">
             <BreadCrumb />
           </div>
         </div>
         <div class="user-info">
-          <el-badge :is-dot="!!noticeCount" class="notice">
-            <el-icon><Bell /></el-icon>
+          <el-badge
+            :is-dot="noticeCount > 0 ? true : false"
+            class="notice"
+            type="danger"
+            @click="$router.push('/audit/approve')"
+          >
+            <i class="el-icon-bell"></i>
           </el-badge>
           <el-dropdown @command="handleLogout">
             <span class="user-link">
               {{ userInfo.userName }}
-              <el-icon class="el-icon--right">
-                <arrow-down />
-              </el-icon>
+              <i class="el-icon--right"></i>
             </span>
             <template #dropdown>
               <el-dropdown-menu>
@@ -51,9 +54,7 @@
         </div>
       </div>
       <div class="wrapper">
-        <div class="main-page">
-          <router-view />
-        </div>
+        <router-view></router-view>
       </div>
     </div>
   </div>
@@ -62,40 +63,54 @@
 <script>
 import TreeMenu from "./TreeMenu.vue";
 import BreadCrumb from "./BreadCrumb.vue";
-
 export default {
   name: "Home",
   components: { TreeMenu, BreadCrumb },
   data() {
     return {
-      userInfo: this.$store.state.userInfo || { userName: "", userEmail: "" },
       isCollapse: false,
+      userInfo: this.$store.state.userInfo,
       noticeCount: 0,
       userMenu: [],
+      activeMenu: location.hash.slice(1),
     };
+  },
+  computed: {
+    noticeCount() {
+      return this.$store.state.noticeCount;
+    },
   },
   mounted() {
     this.getNoticeCount();
     this.getMenuList();
   },
   methods: {
-    handleLogout(key) {
-      if (key === "email") return;
-
-      this.$store.commit("saveUserInfo", "");
-      this.userInfo = null;
-      this.$router.push("/login");
-    },
     toggle() {
       this.isCollapse = !this.isCollapse;
     },
+    handleLogout(key) {
+      if (key == "email") return;
+      this.$store.commit("saveUserInfo", "");
+      this.userInfo = {};
+      this.$router.push("/login");
+    },
     async getNoticeCount() {
-      const count = await this.$api.noticeCount();
-      this.noticeCount = count;
+      try {
+        const count = await this.$api.noticeCount();
+        this.$store.commit("saveNoticeCount", count);
+      } catch (error) {
+        console.error(error);
+      }
     },
     async getMenuList() {
-      const list = await this.$api.getMenuList();
-      this.userMenu = list;
+      try {
+        const { menuList, actionList } = await this.$api.getPermissionList();
+        this.$store.commit("saveMenuList", menuList);
+        this.$store.commit("saveActionList", actionList);
+        this.userMenu = menuList;
+      } catch (error) {
+        console.error(error);
+      }
     },
   },
 };
@@ -129,7 +144,7 @@ export default {
     }
     // 合并
     &.fold {
-      width: 74px;
+      width: 64px;
     }
     // 展开
     &.unfold {
@@ -157,30 +172,19 @@ export default {
         display: flex;
         align-items: center;
         .menu-fold {
-          position: relative;
-          top: 3px;
           margin-right: 15px;
           font-size: 18px;
         }
       }
       .user-info {
-        display: flex;
-        align-items: center;
-        vertical-align: center;
         .notice {
-          position: relative;
-          top: 4px;
-          line-height: 25px;
+          line-height: 30px;
           margin-right: 15px;
           cursor: pointer;
         }
         .user-link {
           cursor: pointer;
           color: #409eff;
-          &:hover {
-            border: none;
-            outline: none;
-          }
         }
       }
     }
