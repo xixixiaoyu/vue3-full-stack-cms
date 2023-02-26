@@ -6,14 +6,12 @@ export default {
       url: "/users/login",
       method: "post",
       data,
-      mock: false,
     });
   },
   noticeCount() {
     return request({
       url: "/leave/count",
       method: "get",
-      mock: false,
     });
   },
   getMenuList() {

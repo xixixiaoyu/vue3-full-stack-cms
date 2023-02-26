@@ -15,7 +15,7 @@
         text-color="#fff"
         router
       >
-        <tree-menu />
+        <tree-menu :userMenu="userMenu" />
       </el-menu>
     </div>
     <div :class="['content-right', isCollapse ? 'fold' : 'unfold']">
